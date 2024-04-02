@@ -125,10 +125,14 @@ def get_weather_data():
             with open("prediccion_diaria.json", "w", encoding="utf-8") as file:
                 file.write(response_datos.text)
                 print("Datos de la predicción diaria guardados exitosamente")
+                return "Datos de la predicción diaria guardados exitosamente"
         else:
             print("Error al obtener los datos de la predicción")
+            return "Error al obtener los datos de la predicción"
     else:
         print("Error al obtener la URL de los datos de la predicción")
+        return "Error al obtener la URL de los datos de la predicción"
+  
 
 def predict_weather():
     # Primero, mira si los datos de la predicción diaria están disponibles
@@ -139,15 +143,18 @@ def predict_weather():
     with open("prediccion_diaria.json", "r", encoding="utf-8") as file:
         data = json.load(file)
 
-    # Extrae la fecha de la predicción
-    fecha = data[0]["prediccion"]["dia"]
-    fecha = datetime.strptime(fecha, "%Y-%m-%d")
-    fecha_str = fecha.strftime("%A %d de %B de %Y")
+    # Busca la predicción para el día actual
+    today = datetime.now().date().isoformat()
+    for prediction in data:
+        if prediction["prediccion"]["dia"] == today:
+            fecha_str = datetime.strptime(today, "%Y-%m-%d").strftime("%A %d de %B de %Y")
+            estado_cielo = estado_cielo_dict[prediction["prediccion"]["estadoCielo"]]
+            temp_max = prediction["prediccion"]["temperatura"]["maxima"]
+            temp_min = prediction["prediccion"]["temperatura"]["minima"]
 
-    # Extrae el estado del cielo y las temperaturas
-    estado_cielo = estado_cielo_dict[data[0]["prediccion"]["estadoCielo"]]
-    temp_max = data[0]["prediccion"]["temperatura"]["maxima"]
-    temp_min = data[0]["prediccion"]["temperatura"]["minima"]
+            mensaje = f"El tiempo para Mondejar el {fecha_str} será {estado_cielo} con temperaturas entre {temp_min}°C y {temp_max}°C."
+            
+            return mensaje
 
-    # Crea un mensaje con la predicción del tiempo
-    mensaje = f"El tiempo para Mondejar el {fecha_str} será {estado_cielo} con temperaturas entre {temp_min}°C y {temp_max}°C."
+    # Si no se encuentra la predicción para el día actual
+    return "No se encontraron datos de predicción para el día actual"

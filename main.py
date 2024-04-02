@@ -1,7 +1,7 @@
 # Para ejecutar la app, puedes usar uvicorn, por ejemplo:
 # uvicorn main:app --reload
 
-from fastapi import FastAPI, Path, HTTPException
+from fastapi import FastAPI, HTTPException
 import datetime
 import requests
 import os
@@ -21,8 +21,15 @@ from functions.aemet_functions import predict_weather
 logger = logging.getLogger(__name__)
 app = FastAPI()
 
+# ----------------- SCRIPT FUNCTIONS ----------------- ##
+
+# From functions/aemet_functions.py run get_weather_data()
+    
+
+## ----------------- API ----------------- ##
+
 @app.get("/crypto/{crypto}")
-async def read_crypto(crypto: str = Path(None, description="The cryptocurrency you want to get data for")):
+async def read_crypto(crypto):
     try:
         logger.info(f"Getting data for {crypto}")
         return get_crypto_data(crypto)
@@ -32,7 +39,7 @@ async def read_crypto(crypto: str = Path(None, description="The cryptocurrency y
     
 
 @app.get("/crypto/{crypto}/price")
-async def read_crypto_price(crypto: str = Path(None, description="The cryptocurrency you want to get the price for")):
+async def read_crypto_price(crypto):
     try:
         logger.info(f"Getting price for {crypto}")
         return get_crypto(crypto)
