@@ -16,6 +16,7 @@ from functions.news_functions import noticias_economicas_español
 from functions.stocks_functions import get_stock_price, allPrice
 from functions.weather_functions import get_weather_data, weather_summary
 from functions.checkprice_functions import product_sumary
+from functions.aemet_functions import predict_weather
 
 logger = logging.getLogger(__name__)
 app = FastAPI()
@@ -119,3 +120,21 @@ async def read_datetime():
     now = datetime.datetime.now()
     logger.info(f"Getting date and time")
     return {"Dia": now.strftime("%Y-%m-%d %H:%M:%S")}
+
+@app.get("/checkprice/{product}")
+async def read_product(product: str):
+    try:
+        logger.info(f"Getting price for {product}")
+        return product_sumary(product)
+    except Exception as e:
+        logger.error(f"Error getting price for {product}: {e}")
+        raise HTTPException(status_code=500, detail="Error getting price for {product}")
+  
+@app.get("/weatherprediction")
+async def read_weather_prediction():
+    try:
+        logger.info("Getting weather prediction")
+        return predict_weather()
+    except Exception as e:
+        logger.error(f"Error getting weather prediction: {e}")
+        raise HTTPException(status_code=500, detail="Error getting weather prediction")
