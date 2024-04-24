@@ -7,4 +7,7 @@ api_url = "http://localhost:8080/hora"
 response = requests.get(api_url)
 
 # Imprimir el código de estado de la respuesta
-print(response.status_code)
+print("Status Code: ", response.status_code)
+
+# Imprimir el contenido de la respuesta
+print("Response Text: ", response.text)
