@@ -8,7 +8,9 @@ import os
 from dotenv import load_dotenv
 import logging
 from pydantic import BaseModel
+from urllib.parse import urlparse, parse_qs
 
+# ----------------- FUNCTIONS TO API ----------------- #
 from functions.crypto_functions import get_crypto_data, get_crypto
 from functions.metro_functions import scrape_metro_status
 from functions.miestacion_functions import miestacion
@@ -17,14 +19,9 @@ from functions.stocks_functions import get_stock_price, allPrice
 from functions.weather_functions import get_weather_data, weather_summary
 from functions.checkprice_functions import product_sumary
 from functions.aemet_functions import predict_weather
-
+from functions.youtubedonwload import descargar_video, convertir_a_mp3
 logger = logging.getLogger(__name__)
 app = FastAPI()
-
-# ----------------- SCRIPT FUNCTIONS ----------------- ##
-
-# From functions/aemet_functions.py run get_weather_data()
-    
 
 ## ----------------- API ----------------- ##
 
@@ -145,3 +142,12 @@ async def read_weather_prediction():
     except Exception as e:
         logger.error(f"Error getting weather prediction: {e}")
         raise HTTPException(status_code=500, detail="Error getting weather prediction")
+    
+## ----------------- PARA VER LA API DEL SENSOR ----------------- ##
+# get to datos sensores
+
+# get to sensores on 
+
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the API!"}

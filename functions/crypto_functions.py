@@ -2,7 +2,6 @@
 
 import requests
 from PIL import Image, ImageDraw, ImageFont
-import os
 from datetime import datetime
 from io import BytesIO
 from dotenv import load_dotenv
