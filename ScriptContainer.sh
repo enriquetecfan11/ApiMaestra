@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Select and option: "
-echo "1 - Start Cotainer"
+echo "1 - Start Container"
 echo "2 - Remove Container"
 echo "3 - Show Logs"
 ecjo "4 - Exit"
