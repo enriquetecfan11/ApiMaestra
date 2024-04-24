@@ -1,26 +1,18 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim-buster
+# Usar una imagen oficial de Python como imagen base
+FROM python:3.9-slim
 
-# Set the working directory in the container to /app
+# Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Add the current directory contents into the container at /app
-ADD . /app
-
-# Update system
-RUN  apt-get update 
-
-# Install required packages
-RUN apt-get install -y --no-install-recommends gcc ffmpeg
-
-# Remove apt/lists
-RUN rm -rf /var/lib/apt/lists/*
-
-# Install any needed packages specified in requirements.txt
+# Copiar el archivo de dependencias y instalarlas
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Copiar todos los archivos del proyecto al contenedor
+COPY . .
 
-# Run main.py when the container launches
-CMD ["python", "main.py"]
+# Exponer el puerto en el que uvicorn correrá
+EXPOSE 8000
+
+# Comando para ejecutar la aplicación usando uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
