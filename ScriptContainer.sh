@@ -4,7 +4,9 @@ echo "Select and option: "
 echo "1 - Start Container"
 echo "2 - Remove Container"
 echo "3 - Show Logs"
-ecjo "4 - Exit"
+echo "4 - Enter into container"
+echo "5 - Clean Docker"
+echo "6 - Exit"
 read opcion
 
 case $opcion in
@@ -38,7 +40,18 @@ case $opcion in
     docker logs -f apimaestra
     ;;
   4)
+    echo "Enter into container ..."
+    # Enter into container
+    docker exec -it apimaestra /bin/bash
+    ;;
+  5)
+    echo "Clean Docker ..."
+    # Clean Docker
+    docker system prune -a
+    ;;
+  6)
     echo "Exit"
+    exit 0
     ;;
   *)
     echo "Invalid option"
