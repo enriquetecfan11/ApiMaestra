@@ -71,15 +71,6 @@ async def read_news():
         logger.error(f"Error getting economic news in Spanish: {e}")
         raise HTTPException(status_code=500, detail="Error getting economic news in Spanish")
 
-@app.get("/stocks/{url}/{company_name}")
-async def read_stocks(url: str, company_name: str):
-    try:
-        logger.info(f"Getting stock price for {company_name}")
-        return get_stock_price(url, company_name)
-    except Exception as e:
-        logger.error(f"Error getting stock price for {company_name}: {e}")
-        raise HTTPException(status_code=500, detail="Error getting stock price for {company_name}")
-
 @app.get("/stocks")
 async def read_all_stocks():
     try:
@@ -97,15 +88,6 @@ async def read_weather(city: str):
     except Exception as e:
         logger.error(f"Error getting weather data for {city}: {e}")
         raise HTTPException(status_code=500, detail="Error getting weather data for {city}")
-
-@app.get("/weathersumary/{city}")
-async def read_weather_summary(city: str):
-    try:
-        logger.info(f"Getting weather summary for {city}")
-        return weather_summary(city)
-    except Exception as e:
-        logger.error(f"Error getting weather summary for {city}: {e}")
-        raise HTTPException(status_code=500, detail="Error getting weather summary for {city}")
 
 @app.get("/hora")
 async def read_time():
@@ -125,28 +107,6 @@ async def read_datetime():
     logger.info(f"Getting date and time")
     return {"Dia": now.strftime("%Y-%m-%d %H:%M:%S")}
 
-@app.get("/checkprice/{product}")
-async def read_product(product: str):
-    try:
-        logger.info(f"Getting price for {product}")
-        return product_sumary(product)
-    except Exception as e:
-        logger.error(f"Error getting price for {product}: {e}")
-        raise HTTPException(status_code=500, detail="Error getting price for {product}")
-  
-@app.get("/weatherprediction")
-async def read_weather_prediction():
-    try:
-        logger.info("Getting weather prediction")
-        return predict_weather()
-    except Exception as e:
-        logger.error(f"Error getting weather prediction: {e}")
-        raise HTTPException(status_code=500, detail="Error getting weather prediction")
-    
-## ----------------- PARA VER LA API DEL SENSOR ----------------- ##
-# get to datos sensores
-
-# get to sensores on 
 
 @app.get("/")
 async def read_root():
