@@ -60,8 +60,8 @@ def scrape_metro_status():
             line_statuses[line_number] = status
     
     # Print the line statuses
-    for line, status in line_statuses.items():
-        print(f'Línea {line}: {status}')
+    # for line, status in line_statuses.items():
+    #     print(f'Línea {line}: {status}')
     
     # Return the dictionary containing the statuses
     return line_statuses
