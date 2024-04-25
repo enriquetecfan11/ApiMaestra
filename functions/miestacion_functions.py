@@ -6,7 +6,7 @@ import logging
 # Función para el comando /miestacion, que muestra el estado de una mi propia estación de temperatura
 def miestacion():
   # Obtener los datos de la estación
-  response = requests.get("http://192.168.1.77:5000/api/miniestacion")
+  response = requests.get("http://192.168.1.124:5000/api/miniestacion")
 
   # Convertir los datos a formato JSON
   data = response.json()
